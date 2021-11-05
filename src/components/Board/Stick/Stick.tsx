@@ -15,8 +15,6 @@ const Stick: React.FC<StickProps> = ({
   index,
   selectedStick,
 }) => {
-  console.log(selectedStick, index);
-
   return (
     <div
       style={{
