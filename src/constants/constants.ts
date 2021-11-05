@@ -1,0 +1,15 @@
+const MIN_RGB = 0;
+const MAX_RGB = 255;
+const BRICK_HEIGHT = 30; // in px
+const NUMBER_OF_BRICKS = 3;
+const SIZE_OF_BRICK_PART = 50; // in px
+const STICK_HEIGHT = NUMBER_OF_BRICKS * BRICK_HEIGHT + BRICK_HEIGHT;
+
+export const constants = {
+  MIN_RGB,
+  MAX_RGB,
+  BRICK_HEIGHT,
+  NUMBER_OF_BRICKS,
+  SIZE_OF_BRICK_PART,
+  STICK_HEIGHT,
+};

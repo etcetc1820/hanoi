@@ -1,0 +1,18 @@
+.stickWrapper {
+    position: relative;
+    flex: 0 0 33.3%;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.stick {
+    width: 15px;
+    background: #333;
+    height: 100%;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 0;
+}
