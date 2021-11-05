@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Brick from "./Brick/Brick";
 import Stick from "./Stick/Stick";
 import { constants } from "../../constants/constants";
