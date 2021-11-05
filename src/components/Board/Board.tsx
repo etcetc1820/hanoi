@@ -1,19 +1,19 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import Brick from "./Brick/Brick";
 import Stick from "./Stick/Stick";
 import { constants } from "../../constants/constants";
 import { createBoard } from "../../utils/createBoard";
-import { BrickType } from "../../types/types";
+import { BoardType } from "../../types/types";
 import styles from "./board.module.scss";
 
-const Board = () => {
-  const [board, setBoard] = useState<BrickType[][]>(
+const Board: React.FC = () => {
+  const [board, setBoard] = useState<BoardType>(
     createBoard(constants.NUMBER_OF_BRICKS)
   );
   const [isBrickSelected, setIsBrickSelected] = useState(false);
   const [selectedStick, setSelectedStick] = useState<null | number>(null);
 
-  const clickHandler = (stickIndex: number) => {
+  const clickHandler = (stickIndex: number): void => {
     if (board[stickIndex].length === 0 && !isBrickSelected) {
       return;
     }

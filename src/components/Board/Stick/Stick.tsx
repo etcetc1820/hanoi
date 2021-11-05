@@ -22,7 +22,7 @@ const Stick: React.FC<StickProps> = ({
         opacity: selectedStick === index ? 0.5 : 1,
       }}
       className={styles.stickWrapper}
-      onClick={() => click(index)}
+      onClick={(): void => click(index)}
     >
       {children}
       <div className={styles.stick} />

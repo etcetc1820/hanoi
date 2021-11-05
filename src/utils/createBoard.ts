@@ -1,7 +1,8 @@
 import { constants } from "../constants/constants";
+import { BoardType } from "../types/types";
 import { getRandomNumberForRGB } from "./getRandomNumberForRGB";
 
-export const createBoard = (numberOfBricks: number) => {
+export const createBoard = (numberOfBricks: number): BoardType => {
   const filledFirstStick = Array.from(
     { length: numberOfBricks },
     (_, index) => ({
