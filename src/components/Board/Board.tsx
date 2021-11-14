@@ -3,18 +3,21 @@ import Brick from "./Brick/Brick";
 import Stick from "./Stick/Stick";
 import { constants } from "../../constants/constants";
 import { createBoard } from "../../utils/createBoard";
-import { BoardType } from "../../types/types";
+import { BoardOfStackType } from "../../types/types";
 import styles from "./board.module.scss";
 
+let startingStick = 0;
+
 const Board: React.FC = () => {
-  const [board, setBoard] = useState<BoardType>(
+  const [board] = useState<BoardOfStackType>(
     createBoard(constants.NUMBER_OF_BRICKS)
   );
+
   const [isBrickSelected, setIsBrickSelected] = useState(false);
   const [selectedStick, setSelectedStick] = useState<null | number>(null);
 
   const clickHandler = (stickIndex: number): void => {
-    if (board[stickIndex].length === 0 && !isBrickSelected) {
+    if (board[stickIndex].isEmpty() && !isBrickSelected) {
       return;
     }
 
@@ -29,10 +32,11 @@ const Board: React.FC = () => {
       typeof selectedStick === "number" &&
       selectedStick !== stickIndex
     ) {
-      const stickWhereGetBrick = [...board[selectedStick]];
-      const removedBrick = stickWhereGetBrick.shift();
-
-      if (removedBrick && removedBrick.width > board[stickIndex]?.[0]?.width) {
+      const stickWhereGetBrick = board[selectedStick];
+      const removedBrick = board[selectedStick].peek();
+      const peekedBrick = !board[stickIndex].isEmpty() ? board[stickIndex].peek() : undefined;
+      
+      if (removedBrick && peekedBrick && removedBrick.width > peekedBrick.width) {
         alert("читаем правила!");
         setSelectedStick(null);
         setIsBrickSelected(false);
@@ -40,16 +44,18 @@ const Board: React.FC = () => {
       }
 
       if (removedBrick && selectedStick !== stickIndex) {
-        const updatedBoard = [...board];
-        const stickWhereMoveBrick = [...board[stickIndex]];
+        const stickWhereMoveBrick = board[stickIndex];
 
-        stickWhereMoveBrick.unshift(removedBrick);
-        updatedBoard[selectedStick] = [...stickWhereGetBrick];
-        updatedBoard[stickIndex] = [...stickWhereMoveBrick];
+        stickWhereMoveBrick.push(removedBrick);
+        stickWhereGetBrick.pop();
 
         setSelectedStick(null);
         setIsBrickSelected(false);
-        setBoard([...updatedBoard]);
+      }
+
+      if (stickIndex !== startingStick && board[stickIndex].isFull()) {
+        alert('Krasava!');
+        startingStick = stickIndex;
       }
     }
   };
@@ -65,7 +71,12 @@ const Board: React.FC = () => {
             click={clickHandler}
             selectedStick={selectedStick}
           >
-            {stick.map(({ width, color }, index) => {
+            {stick.getStore().map((item, index) => {
+              if (item === null) {
+                return;
+              }
+
+              const { width, color } = item;
               return (
                 <Brick
                   key={index}
